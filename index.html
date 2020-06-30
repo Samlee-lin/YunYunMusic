@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>云韵在线播放_bySamLee</title>
+    <link rel="stylesheet" href="./css/main.css">
+</head>
+<body>
+    <!-- 主体 -->
+    <div id="main">
+        <!-- 播放器主体 -->
+        <div id="player">
+            <!-- 播放器标题及搜索条 -->
+            <div id="pltitle">
+                <!-- logo -->
+                <img src="./img/logo.png" alt="logo" class="logo"><span>云韵在线播放</span>
+                <input type="text" class="search" placeholder="请输入你想搜索的" v-model="keyword" @keyup.enter="searchMus">
+                <input type="button" class="searchbtn" @click="searchMus">
+            </div>
+            <!-- 播放器主要部分（音乐列表、播放界面、留言界面）-->
+            <div id="plcontainer">
+                <!-- 搜索歌曲列表 -->
+                <div class="songlist">
+                    <ul>
+                        <li v-for="(item,index) in musiclist" :title="item.name">
+                            <a href="javascript:;" @click="selectMus(item.id)" class="aplaybtn" :class="musicid==item.id?'aplaybtn_active':'aplaybtn'"></a>
+                            <b v-text="item.name" class="amusicname"></b>
+                            <a href="javascript:;" class="amvplay"></a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- 歌曲图片 -->
+                <div class="songpic"  :class="{playing:ifplay}">
+                    <img src="./img/playbar.png" alt="" class="picbar">
+                    <img src="/img/cd.png" alt="" class="piccd autoRotate">
+                    <img :src="musicpic==''?'/img/coverbg.jpg':musicpic" alt="" class="songcover autoRotate">
+                </div>
+                <!-- 歌曲评论 -->
+                <div class="songcomm">
+
+                </div>
+            </div>
+            <!-- 音乐控制导航条 -->
+            <div id="plbanner">
+                <audio ref="audio" id="audioplayer" @play="play" @pause="pause" class="audioplayer" :src="musicurl" controls autoplay loop></audio>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="./js/index.js"></script>
+</body>
+</html>
