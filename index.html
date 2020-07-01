@@ -26,7 +26,7 @@
                         <li v-for="(item,index) in musiclist" :title="item.name">
                             <a href="javascript:;" @click="selectMus(item.id)" class="aplaybtn" :class="musicid==item.id?'aplaybtn_active':'aplaybtn'"></a>
                             <b v-text="item.name" class="amusicname"></b>
-                            <a href="javascript:;" class="amvplay"></a>
+                            <a href="javascript:;" class="amvplay" v-if="item.mvid!=0" @click="playMv(item.mvid)"></a>
                         </li>
                     </ul>
                 </div>
@@ -34,16 +34,31 @@
                 <div class="songpic"  :class="{playing:ifplay}">
                     <img src="./img/playbar.png" alt="" class="picbar">
                     <img src="./img/cd.png" alt="" class="piccd autoRotate">
-                    <img :src="musicpic==''?'/img/coverbg.jpg':musicpic" alt="" class="songcover autoRotate">
+                    <img :src="musicpic==''?'./img/coverbg.jpg':musicpic" alt="" class="songcover autoRotate">
                 </div>
                 <!-- 歌曲评论 -->
                 <div class="songcomm">
-
+                    <div class="commtitle">热门评论：</div>
+                    <div class="commlist">
+                        <dl v-for="(item,index) in hotComments">
+                            <dt class="commericon"><img :src="item.user.avatarUrl=''?'./img/usericon.png':item.user.avatarUrl" alt="用户头像"></dt>
+                            <div class="comminfo">
+                                <dd class="commername" v-text="item.user.nickname">用户名</dd>
+                                <dd class="commcontent" v-text="item.content">评论</dd>
+                            </div>
+                            
+                        </dl>
+                    </div>
                 </div>
             </div>
             <!-- 音乐控制导航条 -->
             <div id="plbanner">
                 <audio ref="audio" id="audioplayer" @play="play" @pause="pause" class="audioplayer" :src="musicurl" controls autoplay loop></audio>
+            </div>
+            <!-- 播放MV -->
+            <div class="mvwarp" v-show="ifshowmv">
+                <video :src="mvUrl" class="mvaudio" controls></video>
+                <div class="mvmask"  @click="closeMV"></div>
             </div>
         </div>
     </div>
@@ -52,5 +67,6 @@
     <!-- 开发环境版本，包含了有帮助的命令行警告 -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="./js/index.js"></script>
+    <script src="./js/main.js"></script>
 </body>
 </html>

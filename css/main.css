@@ -17,8 +17,12 @@
 /* 播放器主体 */
 #player{
     margin: auto;
-    width: 800px
+    width: 800px;
+    -moz-box-shadow:3px 2px 8px #333333; 
+    -webkit-box-shadow:3px 2px 8px #333333;
+    box-shadow:3px 2px 8px #333333;
 }
+
 
 /* 播放器标题及搜索条 */
 #pltitle{
@@ -34,14 +38,17 @@
     width: 80px;
     margin-left: 20px;
 }
+#pltitle span{
+    color: #fff;
+}
 #pltitle .search{
     height: 35px;
     width: 250px;
     margin-right: 25px;
     padding-left: 15px;
-    border-radius: 5px;
     border: none;
-    border-radius: 20px;   
+    border-radius: 20px; 
+    background: rgba(255, 255, 255, 0.9);  
     outline: none;
 }
 #pltitle .searchbtn{
@@ -65,8 +72,9 @@
 }
 .songlist{
     width: 224px;
-    height: 400px;
+    height: 380px;
     border-right: 1px solid #999999;
+    border-color: linear-gradient(to bottom right, red, yellow);
     padding: 10px;
 }
 .songlist ul{
@@ -79,6 +87,7 @@
     scrollbar-width: none; /* firefox */
     -ms-overflow-style: none; /* IE 10+ */
 }
+/* chrome和safari */
 .songlist ul::-webkit-scrollbar{
     display: none;
 }
@@ -187,7 +196,49 @@ songpic.playing .piccd,.songpic.playing .songcover{
 .songcomm{
     width: 225px;
 }
-
+.songcomm .commtitle{
+    font-size: 18px;
+    padding-top: 5px;
+    padding-left: 10px;
+    font-weight: bold;   
+}
+.commlist{
+    height: 362px;
+    padding: 5px 10px 5px 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none; /* firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+}
+.commlist::-webkit-scrollbar{
+    display: none;
+}
+.commlist dl{
+    display: flex;
+    align-content: space-around;
+    margin-bottom: 10px;
+}
+.commericon{
+    border-radius: 10px;
+}
+.commericon img{
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    border: 1px solid #6666663d
+}
+.comminfo{
+    padding-left: 5px;
+    padding-right: 10px;
+}
+.commername{
+    font-size: 14px;
+    font-weight: bold;
+    padding: 4px 0px;
+}
+.commcontent{
+    font-size: 13px;
+}
 
 /* 音乐导航条 */
 #plbanner{
@@ -197,4 +248,24 @@ songpic.playing .piccd,.songpic.playing .songcover{
 .audioplayer{
     width: 100%;
     outline: none;
+}
+
+/* MV播放 */
+.mvaudio{
+    position: fixed;
+    z-index: 100;
+    width: 800px;
+    height: 518px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.mvmask{
+    position: fixed;
+    z-index: 99;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,.6);
 }

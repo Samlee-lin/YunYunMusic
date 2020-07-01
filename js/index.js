@@ -12,7 +12,13 @@ var app = new Vue({
         // 歌曲封面图片url
         musicpic : "",
         // 是否播放
-        ifplay : false
+        ifplay : false,
+        // 热门评论
+        hotComments:[],
+        // 是否展示mv页面
+        ifshowmv : false,
+        // mv url
+        mvUrl :""
 
     },
     methods:{
@@ -22,7 +28,7 @@ var app = new Vue({
             axios.get("https://autumnfish.cn/search?keywords="+this.keyword)
             .then(function(response){
                 that.musiclist = response.data.result.songs;
-                // console.log(response.data.result.songs);
+                console.log(response.data.result.songs);
             },function(err){
                 console.log("搜索歌曲出错了！");
             })
@@ -57,9 +63,42 @@ var app = new Vue({
             },function(err){
                 console.log("获取歌曲详情出错了！");
             })
-            
-            this.ifplay = true;
+
+            // 获取歌曲热门评论 https://autumnfish.cn/comment/hot?id=歌曲id&type=0
+            axios.get("https://autumnfish.cn/comment/hot?type=0&id="+id)
+            .then(function(response){
+                //console.log(response.data.hotComments);
+                that.hotComments = response.data.hotComments;
+            },function(){
+                console.log("获取歌曲热门评论出错了！");       
+            })
+
+            that.ifplay = !that.ifplay;
         },
+        // 点击歌曲的MV按钮，弹出MV界面
+        playMv:function(mvid){
+            var that = this;
+            var audio = document.querySelector("#audioplayer");
+            // 获取歌曲MV https://autumnfish.cn/mv/url?id=MVID
+            if(mvid){
+                axios.get("https://autumnfish.cn/mv/url?id="+mvid)
+                .then(function(response){
+                    //console.log(response.data.data.url);
+                    that.mvUrl = response.data.data.url;
+                    that.ifshowmv = true;  
+                    that.ifplay = false; 
+                    audio.pause();
+                    console.log(that.ifplay);    
+                },function(err){
+                    console.log("获取歌曲mv出错了！");
+                })
+            }          
+        },
+        // 关闭MV播放界面
+        closeMV:function(){
+            this.ifshowmv = false;
+            this.mvUrl = "";
+        }
         
     }
 })
