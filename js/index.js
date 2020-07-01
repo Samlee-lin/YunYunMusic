@@ -2,7 +2,7 @@ var app = new Vue({
     el:"#main",
     data:{
         // 搜索关键字
-        keyword : "起风了",
+        keyword : "",
         // 获取到的音乐列表
         musiclist : [],
         // 当前歌曲id musicid
